@@ -37,37 +37,42 @@ out/
 
 ```bash
 pip install -r requirements.txt
-🎯 Dataset Generation (Optional)
+```
+##🎯 Dataset Generation (Optional)
 
 To regenerate noisy-STT synthetic train/dev sets:
-
+```bash
 python src/generate_data.py --train_out data/train.jsonl --dev_out data/dev.jsonl
-
-🧠 Train the Model
+```
+##🧠 Train the Model
+```bash
 python src/train.py \
   --model_name distilbert-base-uncased \
   --train data/train.jsonl \
   --dev data/dev.jsonl \
   --out_dir out
-
+```
 
 Optional: freeze the transformer base for faster training & lower latency:
-
+```bash
 python src/train.py --freeze_base ...
-
-🔎 Predict
+```
+##🔎 Predict
+```bash
 python src/predict.py \
   --model_dir out \
   --input data/dev.jsonl \
   --output out/dev_pred.json
-
-📊 Evaluate
+```
+##📊 Evaluate
 Dev Set
+```bash
 python src/eval_span_f1.py \
   --gold data/dev.jsonl \
   --pred out/dev_pred.json
-
+```
 Stress Test (Optional)
+```bash
 python src/predict.py \
   --model_dir out \
   --input data/stress.jsonl \
@@ -76,21 +81,23 @@ python src/predict.py \
 python src/eval_span_f1.py \
   --gold data/stress.jsonl \
   --pred out/stress_pred.json
+```
 
-⚡ Latency (Assignment Requirement)
+##⚡ Latency (Assignment Requirement)
+```bash
 python src/measure_latency.py \
   --model_dir out \
   --input data/dev.jsonl \
   --runs 50
-
-✅ Final Latency Results (CPU, batch_size=1):
+```
+##✅ Final Latency Results (CPU, batch_size=1):
 p50: 12.88 ms
 p95: 19.25 ms
 
 
 ✔ Passes requirement: p95 ≤ 20 ms
 
-📈 Final Metrics
+##📈 Final Metrics
 Stress Set Metrics
 Per-entity metrics:
 CITY            P=0.706 R=0.600 F1=0.649
